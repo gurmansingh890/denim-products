@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Indigo &amp; Stitch | Artisanal Denim</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Domine:wght@400;600;700&amp;family=Work+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#041533",
+                    "on-tertiary-fixed": "#2c160e",
+                    "surface-tint": "#505e80",
+                    "on-error": "#ffffff",
+                    "surface-bright": "#fbf9f4",
+                    "on-surface": "#1b1c19",
+                    "on-surface-variant": "#45464e",
+                    "outline": "#75777e",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#5d4037",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed": "#ffdbce",
+                    "inverse-surface": "#30312e",
+                    "surface-container-highest": "#e4e2dd",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#ffdbd0",
+                    "secondary-fixed-dim": "#ffb598",
+                    "on-secondary-fixed-variant": "#78310f",
+                    "on-secondary": "#ffffff",
+                    "tertiary-container": "#3d241c",
+                    "outline-variant": "#c5c6cf",
+                    "on-primary-fixed": "#0a1b39",
+                    "on-background": "#1b1c19",
+                    "surface-dim": "#dbdad5",
+                    "background": "#fbf9f4",
+                    "surface-container": "#f0eee9",
+                    "tertiary": "#251009",
+                    "on-tertiary-container": "#ae897e",
+                    "surface-container-high": "#eae8e3",
+                    "inverse-primary": "#b7c6ed",
+                    "on-secondary-fixed": "#370e00",
+                    "on-primary-container": "#8392b6",
+                    "surface": "#fbf9f4",
+                    "on-surface-variant": "#45464e",
+                    "on-secondary-container": "#772f0d",
+                    "primary-fixed-dim": "#b7c6ed",
+                    "primary-fixed": "#d9e2ff",
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#e4e2dd",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#1b2a49",
+                    "tertiary-fixed-dim": "#e7bdb1",
+                    "secondary": "#974724",
+                    "secondary-container": "#ff996f",
+                    "on-primary-fixed-variant": "#384667",
+                    "surface-container-low": "#f5f3ee",
+                    "inverse-on-surface": "#f2f1ec",
+                    "surface-container-lowest": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "64px",
+                    "stitch-gap": "4px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Domine"],
+                    "headline-lg-mobile": ["Domine"],
+                    "stitch-label": ["JetBrains Mono"],
+                    "body-lg": ["Work Sans"],
+                    "headline-md": ["Domine"],
+                    "body-md": ["Work Sans"],
+                    "label-md": ["JetBrains Mono"],
+                    "display-lg": ["Domine"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "stitch-label": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .denim-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l40 40M-10 30l20 20M30-10l20 20' stroke='%23041533' stroke-width='0.5' stroke-opacity='0.03' fill='none'/%3E%3C/svg%3E");
+        }
+        .stitch-divider-h {
+            background-image: linear-gradient(to right, #041533 50%, transparent 50%);
+            background-size: 4px 1px;
+            background-repeat: repeat-x;
+            height: 1px;
+            width: 100%;
+        }
+        .stitch-divider-v {
+            background-image: linear-gradient(to bottom, #041533 50%, transparent 50%);
+            background-size: 1px 4px;
+            background-repeat: repeat-y;
+            width: 1px;
+            height: 100%;
+        }
+        .leather-patch {
+            background-color: #974724;
+            color: #ffffff;
+            box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        .leather-patch::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            border: 1px dashed rgba(255,255,255,0.3);
+            pointer-events: none;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background text-on-surface denim-pattern min-h-screen">
+<!-- Location Banner -->
+<div class="w-full bg-primary text-on-primary py-2 px-margin-desktop flex justify-center items-center space-x-2 z-[60]">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<p class="font-label-md text-label-md">Delivering to Brooklyn, NY • Explore 12 Artisans near you</p>
+</div>
+<!-- TopNavBar -->
+<header class="fixed top-10 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-20 bg-surface/95 backdrop-blur-sm border-b border-primary/10">
+<div class="flex items-center space-x-8">
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary">Indigo &amp; Stitch</h1>
+<nav class="hidden md:flex space-x-6">
+<a class="font-label-md text-label-md text-primary border-b-2 border-secondary font-bold pb-1" href="#">Shop</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Custom</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Artisans</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Loom</a>
+</nav>
+</div>
+<div class="flex items-center space-x-6">
+<div class="hidden lg:flex items-center space-x-2 text-on-surface-variant font-label-md">
+<span class="material-symbols-outlined">search</span>
+<span>Search</span>
+</div>
+<div class="flex items-center space-x-4">
+<button class="material-symbols-outlined text-primary active:scale-95 duration-150">storefront</button>
+<button class="material-symbols-outlined text-secondary active:scale-95 duration-150">shopping_basket</button>
+<div class="w-8 h-8 rounded-full border border-outline-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A dignified close-up portrait of a Japanese master weaver with silver hair, wearing a traditional dark indigo work kimono. He is in his sun-drenched Kyoto workshop, surrounded by antique wooden looms and hanks of naturally dyed blue yarn. The lighting is soft and cinematic, highlighting the deep textures of the fabric and the wisdom in his expression. Minimalist, heritage aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHDfkIukmzUoWTQupusqjkx87y43tIFibvhIj3iIWKlymKYma2aHjNLM-GGRAOTh87X26VPwze_0d7TVSftgxHiPmmzacb73Xjs3IsGtp9P_h35Sird-YWRTc8z06pdoLoP6IYR3UP7mcI0sGWyetNg2Jkn_KtiJ8YhQLxREtkajUJBcHeUognDfkGiuva0C0ujlwk-GgYEyWrDdp6o6Z17f7Dbh0iVZPKLSx-6Ne2xISVBSWUl-eazA"/>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-32 pb-24">
+<!-- Hero Section -->
+<section class="px-margin-desktop mb-24">
+<div class="grid lg:grid-cols-2 gap-12 items-center">
+<div class="space-y-8">
+<div class="inline-flex items-center space-x-3 text-secondary">
+<span class="stitch-divider-h w-8"></span>
+<span class="font-stitch-label text-stitch-label">ESTABLISHED 1892</span>
+</div>
+<h2 class="font-display-lg text-display-lg text-primary max-w-xl">Crafted by Hands, Worn by You</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
+                        We believe in slow fashion. Every garment is a dialogue between the weaver, the indigo, and the wearer. Our denim is woven on vintage shuttle looms, creating a fabric that lives, breathes, and ages with your unique story.
+                    </p>
+<div class="flex space-x-6 pt-4">
+<button class="bg-primary text-on-primary px-8 py-4 font-label-md text-label-md rounded-lg active:scale-95 transition-transform">Explore Collection</button>
+<button class="border border-primary text-primary px-8 py-4 font-label-md text-label-md rounded-lg hover:bg-primary/5 active:scale-95 transition-transform">Custom Fitting</button>
+</div>
+<!-- Artisan Spotlight Snippet -->
+<div class="bg-surface-container p-6 border border-primary/5 flex items-center space-x-6 max-w-md relative group cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="relative w-20 h-20 rounded-full border-2 border-primary overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A focused studio shot of Kenji, a master artisan, working on a vintage wooden loom. His hands are stained a deep, beautiful indigo blue as he meticulously guides the thread. The background is a blurred workshop with hanging scrolls and textile tools. Warm, artisanal atmosphere with a focus on tactile craftsmanship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDe_nZgS7WTKEBwKR_makpPJKFtHkcl5pBl4ZpgsyKeG9URClv4TLQySVb4WobwWZ772sXx_jOMM509WbJCfRAeqr2vObz_E4DLT4w-RmrQzZ_sCZN5-AI_Ph7Zx5a68NkGcIif-d20JrhowiHVpOyJ-Ah7ciDapcU9aX3hCNibR57simgkGYUSoyzYgWq2w-DeDy6AdOWLyeFOe7UU0Jx9dBOIpoC_oYhA-fImW9gTreHJzOTRxp9Njw"/>
+</div>
+<div>
+<span class="font-stitch-label text-stitch-label text-secondary">MASTER ARTISAN</span>
+<h4 class="font-headline-md text-headline-md text-primary">Kenji Matsui</h4>
+<p class="font-label-md text-label-md text-on-surface-variant italic">Handmade in Kyoto, Japan</p>
+</div>
+<div class="absolute -top-3 -right-3 leather-patch px-3 py-1 font-stitch-label text-[10px] transform rotate-3">18oz SELVEDGE</div>
+</div>
+</div>
+<div class="relative h-[600px] bg-surface-container-highest overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A wide-angle, high-contrast photograph of an authentic indigo dyeing workshop in Kyoto. Large ceramic vats filled with deep blue dye line the stone floor. Sunlight streams through wooden rafters, illuminating dust motes and hanging strips of raw denim drying. The scene is quiet, reverent, and deeply textural, emphasizing the traditional slow process." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBn74yz17BGkeQ_N4MT3vdo-WcDAKsab5LALUkIwkdzRSfBn_TEbUh2uI8da_oO9ELjfNdzjOOpJBzDbLOouEJKdZzSN2MmTHdsIhTlJ_lXPiBvd5Q2LkC2gk1iO-X0G5rTQY3MPnGYO3LcnAzfyXL4zJJ0PKollvRVKFpXZC3PMm19sEfVX5M3Int8OQCSD_y9kVbC0KiVYAKSBHEaj_U38yFZswxtEi2mqm1tRQdHHmPuKDvYyHRE0w"/>
+<div class="absolute bottom-8 left-8 bg-surface/90 backdrop-blur px-6 py-4 border-l-4 border-secondary">
+<p class="font-stitch-label text-stitch-label text-primary">CURRENT PROCESS</p>
+<p class="font-headline-md text-headline-md text-primary">Natural Indigo Fermentation</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Category Filters -->
+<section class="px-margin-desktop mb-16">
+<div class="flex flex-wrap gap-4 items-center justify-center border-y border-dashed border-outline-variant py-8">
+<button class="px-6 py-2 rounded-full bg-secondary text-on-secondary font-label-md shadow-sm">All Crafts</button>
+<button class="px-6 py-2 rounded-full border border-outline-variant hover:bg-surface-container font-label-md transition-colors">Raw Denim</button>
+<button class="px-6 py-2 rounded-full border border-outline-variant hover:bg-surface-container font-label-md transition-colors">Jackets</button>
+<button class="px-6 py-2 rounded-full border border-outline-variant hover:bg-surface-container font-label-md transition-colors">Custom Fits</button>
+<button class="px-6 py-2 rounded-full border border-outline-variant hover:bg-surface-container font-label-md transition-colors">Accessories</button>
+</div>
+</section>
+<!-- Recommended for You Carousel -->
+<section class="mb-24 overflow-hidden">
+<div class="px-margin-desktop flex justify-between items-end mb-8">
+<div>
+<span class="font-stitch-label text-stitch-label text-secondary">CURATED SELECTION</span>
+<h2 class="font-headline-lg text-headline-lg text-primary">Recommended for You</h2>
+</div>
+<div class="flex space-x-2">
+<button class="p-2 border border-outline-variant rounded-full hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="p-2 border border-outline-variant rounded-full hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="flex space-x-8 px-margin-desktop overflow-x-auto no-scrollbar pb-8">
+<!-- Product Card 1 -->
+<div class="flex-shrink-0 w-80 group">
+<div class="aspect-square bg-surface-container relative overflow-hidden border border-primary/5">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A premium denim jacket with deep indigo wash and copper rivet details. The jacket is laid flat on a clean wooden surface, showcasing its structured silhouette and artisanal stitching. High-resolution photography focusing on the texture of the denim weave. Soft side-lighting to reveal depth and shadow." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCyo-ko5Ic8-azwA6O2u0qc-PyETfk5vPLZnhahaeViUjk_oM0U3Ex6A4kMBojxFmEMd1O88WE9sWIzXqv6JuUfD2WYbfMVbCaP_tEq43u7JWjQQNEIJLUNZbd-V4ck2wgpQc6E7AKuwfzhnZ51ukBE3YiHgJ94dIRWdvk2_gyoy604NOqwwJj0Dydd_O6EkDQzHY0-WVj51OEM39_IKcyH8SOAB_9CSM4ePuqCVABC5HbNRdRQoPQCQ"/>
+<div class="absolute top-4 left-4 leather-patch px-3 py-1 font-stitch-label text-[10px]">NEW ARRIVAL</div>
+</div>
+<div class="mt-4 space-y-1">
+<p class="font-stitch-label text-stitch-label text-on-surface-variant">TYPE II JACKET</p>
+<h3 class="font-headline-md text-headline-md text-primary">Kyoto Shadow Wash</h3>
+<p class="font-body-md text-body-md text-primary">$345.00</p>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="flex-shrink-0 w-80 group">
+<div class="aspect-square bg-surface-container relative overflow-hidden border border-primary/5">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Pair of slim-fit raw denim jeans standing upright, showing the unique stiffness and deep blue color of unwashed fabric. The red selvedge line is visible at the folded cuff. Neutral, high-key studio background that emphasizes the product's premium construction and heritage feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBac8QaUMy0vg3zWXkCdfSRzJsZJQ05XyNkdWlv9fM9MMZsu0ZwGCUwkXIQWZe3J_TW5zJMOOj2rS4943xmxveWBxi3kPMl53UVVX4Hu1XD7pDrhS4W039hP9aJKuIoIAcqHej47yffFcOoPeXDsy5XTQinUA7RvJ3yj-2Z_3FDZxcm8-yUwgZMDx00M5usIk5Ifhcspjve37KFCZFG0J3LdU8NDNWSRx7CE3x0skJsj7UQea0aHwoMZw"/>
+<div class="absolute top-4 left-4 leather-patch px-3 py-1 font-stitch-label text-[10px]">14.5oz</div>
+</div>
+<div class="mt-4 space-y-1">
+<p class="font-stitch-label text-stitch-label text-on-surface-variant">THE ARCHIVIST SLIM</p>
+<h3 class="font-headline-md text-headline-md text-primary">Unsanforized Raw</h3>
+<p class="font-body-md text-body-md text-primary">$280.00</p>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="flex-shrink-0 w-80 group">
+<div class="aspect-square bg-surface-container relative overflow-hidden border border-primary/5">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Close up shot of a high-quality leather denim belt with a hand-forged copper buckle. The leather has a rich tan patina. The belt is coiled neatly on a stack of folded denim fabric. Lighting is warm and atmospheric, highlighting the grain of the leather and the shine of the metal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvR4yG7vjlGSXVmB6FgS2OGE6DwHXZFEecvdvfRQagPzUHwCkiC1CHQzt4C60sFVnCsPDzppCf6jDagd09XRHGQtONJxYWS_C7phpcxg4Z7XdkAXqeSSL7xaJybqhddLRVGM-DVP3qxVvWipR8uyQB0ILjLToclelVNSCvR4syfdH7v0d_g9TcpdCOnjnwFI9-yw8hdvxtAOkLJD_71OgtvP3E6_p7sxvRCjxfDKz5b_qXtnjEcKilMw"/>
+</div>
+<div class="mt-4 space-y-1">
+<p class="font-stitch-label text-stitch-label text-on-surface-variant">ARTISAN HARDWARE</p>
+<h3 class="font-headline-md text-headline-md text-primary">Hand-Burnished Belt</h3>
+<p class="font-body-md text-body-md text-primary">$120.00</p>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="flex-shrink-0 w-80 group">
+<div class="aspect-square bg-surface-container relative overflow-hidden border border-primary/5">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A heavy-weight denim chore coat in a deep charcoal indigo, featuring oversized pockets and triple-needle stitching. Model is standing in a minimalist concrete studio, looking away. Professional fashion editorial style with a focus on silhouette and durable material quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8pp8dnollSEsrhYa3jb8lxXbY5fIKDlua6x-INhtGjGtV99kgOq-qnfdR5y5CwFwsrXTYoUq_dlrUyDc5iFlu3pFXTncPx3r7Epitor35GRjF3LiUOoxkDIuG46oXMBBPWEJCmhInWwZmqx17qjJxSq7vWbXQ_jm6Fql1LKndG-LfEmLEizw9PDiNo75kbRb-normvlFgNpmtV30AuAsrXavdCPlFMQzSfgCc0bUUNZvhl0hG9sw9Tg"/>
+<div class="absolute top-4 left-4 leather-patch px-3 py-1 font-stitch-label text-[10px]">LIMITED</div>
+</div>
+<div class="mt-4 space-y-1">
+<p class="font-stitch-label text-stitch-label text-on-surface-variant">CHORE COAT</p>
+<h3 class="font-headline-md text-headline-md text-primary">Iron Forge Utility</h3>
+<p class="font-body-md text-body-md text-primary">$410.00</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Trending Now Swatch Section -->
+<section class="px-margin-desktop mb-24">
+<div class="mb-12">
+<span class="font-stitch-label text-stitch-label text-secondary">FABRIC FOCUS</span>
+<h2 class="font-headline-lg text-headline-lg text-primary">Trending Textiles</h2>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<!-- Swatch 1 -->
+<div class="bg-surface-container-low border border-dashed border-outline-variant p-2 group cursor-pointer transition-all hover:bg-white hover:shadow-xl">
+<div class="aspect-[4/5] bg-surface overflow-hidden border border-primary/10">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Macro extreme close-up of slubby denim fabric weave. The irregular 'slubs' of the white weft threads create a beautiful, bumpy texture against the deep blue warp. The image is crisp and detailed, showing every fiber. Minimalist composition focusing purely on textile art." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuy8BG88BTG8YEjXEzq5nSco5ZAxoaxw6IF57qpbRYxwWcDVKYFprkvrlPDj-W00RN_01l-x8xkaowOQ07L1oxqvCgNkGJa4PZvoZvL2a3s5OXNbzx99Qh-_Xo3OLCOW-KCr406ZexZ-uDwLlU86oI8YfRODPoNE68xqQMirZaJ42nRD4RArnsNmX-OWZhnO8fBhOssRIBjaovww3h25AxC60AL__unquVvnfOeS6LN8n3s4vQq6Pljw"/>
+</div>
+<div class="p-6 text-center">
+<h4 class="font-headline-md text-headline-md text-primary mb-2">Kyoto Slub Selvedge</h4>
+<div class="stitch-divider-h mb-4 opacity-20"></div>
+<p class="font-label-md text-label-md text-on-surface-variant">Characterized by irregular textures and high vertical fading potential.</p>
+<div class="mt-6 inline-block leather-patch px-4 py-2 font-stitch-label text-[12px]">ORDER SWATCH</div>
+</div>
+</div>
+<!-- Swatch 2 -->
+<div class="bg-surface-container-low border border-dashed border-outline-variant p-2 group cursor-pointer transition-all hover:bg-white hover:shadow-xl translate-y-8">
+<div class="aspect-[4/5] bg-surface overflow-hidden border border-primary/10">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Extreme macro shot of 'Broken Twill' denim weave. The pattern is a zigzag aesthetic that prevents leg twisting. The denim is a vibrant, electric blue. Professional studio lighting highlights the intricate cross-hatch pattern. A tactile, industrial fashion aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNqQJ-Ti5ymTznC1-ezAwhV7v01y2u5kuPeFki8_VvtCAp6aEA68Cjlj4QREMC9AVwtFAQqcnOWzkZFWNIBkdd1xjgytBk37bl6Z5hIxSqd6CO7EfRbd9dp0-DTTaf-vL8obXsLWhP0A02E1M2Apl_fU1s3VkPur9leCAodTAqQErWpigtL-cd_IcsAQj3HLuKRfm7jNhdBDCxcf5TLMlT9u0yccG4Zd9ese6n5tbpIUq91cd72-39vQ"/>
+</div>
+<div class="p-6 text-center">
+<h4 class="font-headline-md text-headline-md text-primary mb-2">Ocean Broken Twill</h4>
+<div class="stitch-divider-h mb-4 opacity-20"></div>
+<p class="font-label-md text-label-md text-on-surface-variant">Engineered for comfort and a unique 'salt and pepper' fade profile.</p>
+<div class="mt-6 inline-block leather-patch px-4 py-2 font-stitch-label text-[12px]">ORDER SWATCH</div>
+</div>
+</div>
+<!-- Swatch 3 -->
+<div class="bg-surface-container-low border border-dashed border-outline-variant p-2 group cursor-pointer transition-all hover:bg-white hover:shadow-xl">
+<div class="aspect-[4/5] bg-surface overflow-hidden border border-primary/10">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Close-up of deep charcoal black denim fabric with a subtle 'hairy' texture. The weave is tight and dense. The image captures the sophisticated, modern look of high-end dark textiles. Lighting is moody and high-contrast, focusing on the quality of the dye." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAv8PLDg5Q1zDVWHoDAmkcCsgsY3op_FA1ZNVY_EoKFXWQupz1HmEmP8DbwXsa05Qr01ZpOQU7yHBsXN1_hagr2Aaj4u7mWBKsJ70NcKh6Be_A_7K-tVWAPK8QStOqx_75XL1iLNILZCaL-aa7irSZFuckbEfX9YMnwMlEWFexrlMGSNInTbHEWEPEbR3sD3anlEGXrIDguLGFPuaGpwvs-eIuQn768dlYg2Fd0212P5F-O6Ffaq1_2pw"/>
+</div>
+<div class="p-6 text-center">
+<h4 class="font-headline-md text-headline-md text-primary mb-2">Obsidian Hemp Blend</h4>
+<div class="stitch-divider-h mb-4 opacity-20"></div>
+<p class="font-label-md text-label-md text-on-surface-variant">Sustainability meets durability in this breathable, heavyweight blend.</p>
+<div class="mt-6 inline-block leather-patch px-4 py-2 font-stitch-label text-[12px]">ORDER SWATCH</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA / Brand Story -->
+<section class="px-margin-desktop py-24 bg-primary text-on-primary relative overflow-hidden">
+
+<div class="relative z-10 max-w-2xl mx-auto text-center space-y-8">
+<span class="font-stitch-label text-stitch-label text-secondary-fixed">THE PHILOSOPHY</span>
+<h2 class="font-display-lg text-display-lg">Wear the soul of the artisan.</h2>
+<p class="font-body-lg text-body-lg text-primary-fixed/80">
+                    Indigo &amp; Stitch is more than a brand; it's a movement back to quality and transparency. We track every yard of fabric from the loom to your doorstep.
+                </p>
+<div class="pt-8">
+<button class="bg-secondary text-on-secondary px-12 py-4 font-headline-md text-headline-md rounded-lg active:scale-95 transition-transform">Start Your Journey</button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-surface/90 backdrop-blur-md border-t border-dashed border-outline-variant shadow-lg">
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-stitch-label text-[10px]">Discover</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-stitch-label text-[10px]">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">straighten</span>
+<span class="font-stitch-label text-[10px]">Custom</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="font-stitch-label text-[10px]">Orders</span>
+</a>
+</nav>
+<footer class="bg-surface-container py-12 px-margin-desktop border-t border-dashed border-outline-variant">
+<div class="grid md:grid-cols-4 gap-12">
+<div class="col-span-2 space-y-6">
+<h2 class="font-headline-lg text-headline-lg text-primary">Indigo &amp; Stitch</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm">
+                    Preserving the heritage of textile craftsmanship through digital transparency and artisanal collaboration.
+                </p>
+<div class="flex space-x-4">
+<a class="w-10 h-10 border border-outline-variant rounded-full flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors" href="#">
+<span class="material-symbols-outlined">share</span>
+</a>
+<a class="w-10 h-10 border border-outline-variant rounded-full flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors" href="#">
+<span class="material-symbols-outlined">language</span>
+</a>
+</div>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-primary font-bold mb-4">Workshop</h4>
+<ul class="space-y-2 font-label-md text-label-md text-on-surface-variant">
+<li><a class="hover:text-secondary" href="#">Our Artisans</a></li>
+<li><a class="hover:text-secondary" href="#">Dye Process</a></li>
+<li><a class="hover:text-secondary" href="#">The Loom</a></li>
+<li><a class="hover:text-secondary" href="#">Sustainability</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-primary font-bold mb-4">Support</h4>
+<ul class="space-y-2 font-label-md text-label-md text-on-surface-variant">
+<li><a class="hover:text-secondary" href="#">Sizing Guide</a></li>
+<li><a class="hover:text-secondary" href="#">Repairs</a></li>
+<li><a class="hover:text-secondary" href="#">Shipping</a></li>
+<li><a class="hover:text-secondary" href="#">Contact</a></li>
+</ul>
+</div>
+</div>
+<div class="mt-12 pt-8 border-t border-outline-variant/20 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+<p class="font-stitch-label text-[10px] text-on-surface-variant">© 2024 INDIGO &amp; STITCH CO. REGISTERED CRAFT HOUSE.</p>
+<p class="font-stitch-label text-[10px] text-on-surface-variant">KYOTO • OKAYAMA • BROOKLYN</p>
+</div>
+</footer>
+<script>
+        // Micro-interactions for carousel
+        const carousel = document.querySelector('.no-scrollbar');
+        const scrollButtons = document.querySelectorAll('button');
+        
+        scrollButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if(btn.innerText.includes('chevron_right')) {
+                    carousel.scrollBy({ left: 340, behavior: 'smooth' });
+                } else if(btn.innerText.includes('chevron_left')) {
+                    carousel.scrollBy({ left: -340, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Hover effect for "Leather Patch" buttons
+        document.querySelectorAll('.leather-patch').forEach(patch => {
+            patch.addEventListener('mouseenter', () => {
+                patch.style.transform = 'scale(1.05) rotate(5deg)';
+                patch.style.transition = 'transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            });
+            patch.addEventListener('mouseleave', () => {
+                patch.style.transform = 'scale(1) rotate(3deg)';
+            });
+        });
+    </script>
+</body></html>
