@@ -3,8 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../api/client';
 import { useCartStore } from '../../store/useCartStore';
 import PriceBreakdownTable from '../../components/PriceBreakdownTable';
-import { CopperRivet } from '../../components/CopperRivet';
-import { LeatherTagBadge } from '../../components/LeatherTagBadge';
+import { CopperRivet, LeatherTagBadge } from '../../components/LeatherTagBadge';
 
 export default function Customization() {
   const { productId } = useParams();
