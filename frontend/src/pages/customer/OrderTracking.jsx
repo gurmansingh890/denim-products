@@ -46,7 +46,9 @@ export default function OrderTracking() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-dashed border-outline-variant pb-6">
         <div>
           <span className="font-stitch-label text-xs text-secondary tracking-widest">LIVE CRAFT TRACKER</span>
-          <h2 className="font-headline-lg text-3xl text-primary font-bold">Order #{order._id?.slice(-8).toUpperCase()}</h2>
+          <h2 className="font-headline-lg text-3xl text-primary font-bold">
+            Order #{((order._id || order.id || 'ord_1001') + '').slice(-8).toUpperCase()}
+          </h2>
           <p className="font-body-md text-xs text-on-surface-variant">
             Placed on {new Date(order.created_at || Date.now()).toLocaleDateString()} • Artisan: {order.business_name || 'Matsui Dye House'}
           </p>

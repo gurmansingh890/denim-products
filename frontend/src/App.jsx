@@ -90,6 +90,9 @@ export default function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
+
+              {/* Catch-all Fallback Route */}
+              <Route path="*" element={<Home />} />
             </Routes>
           </div>
 
