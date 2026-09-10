@@ -1,8 +1,18 @@
 import { create } from 'zustand';
 import api from '../api/client';
 
+const getInitialUser = () => {
+  try {
+    const item = localStorage.getItem('indigo_user');
+    return item ? JSON.parse(item) : null;
+  } catch (e) {
+    console.warn('Failed to parse indigo_user from localStorage', e);
+    return null;
+  }
+};
+
 export const useAuthStore = create((set) => ({
-  user: JSON.parse(localStorage.getItem('indigo_user')) || null,
+  user: getInitialUser(),
   token: localStorage.getItem('indigo_token') || null,
   isAuthenticated: !!localStorage.getItem('indigo_token'),
   loading: false,

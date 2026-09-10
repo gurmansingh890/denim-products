@@ -1,7 +1,18 @@
 import { create } from 'zustand';
 
+const getInitialCartItems = () => {
+  try {
+    const item = localStorage.getItem('indigo_cart');
+    const parsed = item ? JSON.parse(item) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (e) {
+    console.warn('Failed to parse indigo_cart from localStorage', e);
+    return [];
+  }
+};
+
 export const useCartStore = create((set, get) => ({
-  items: JSON.parse(localStorage.getItem('indigo_cart')) || [],
+  items: getInitialCartItems(),
   
   addItem: (product, selections = [], quantity = 1) => {
     const currentItems = get().items;
