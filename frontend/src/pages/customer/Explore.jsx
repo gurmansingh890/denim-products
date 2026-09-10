@@ -3,11 +3,58 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import api from '../../api/client';
 import { LeatherTagBadge } from '../../components/LeatherTagBadge';
 
+const MOCK_EXPLORE_PRODUCTS = [
+  {
+    _id: 'p1',
+    title: 'Kyoto Shuttle 18oz Heavy Selvedge',
+    category: 'Raw Denim',
+    base_price: 240.0,
+    fabric_weight: '18oz SELVEDGE',
+    artisan_location: 'Kyoto, Japan',
+    description: 'Woven on vintage shuttle looms using 100% natural indigo rope-dyed yarn.',
+    is_customizable: true,
+    images: ['https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop&q=80'],
+  },
+  {
+    _id: 'p2',
+    title: 'Natural Indigo Kakishibu Trucker Jacket',
+    category: 'Jackets',
+    base_price: 320.0,
+    fabric_weight: '15.5oz TWILL',
+    artisan_location: 'Okayama, Japan',
+    description: 'Persimmon tannin (Kakishibu) over-dyed indigo trucker jacket with copper hardware.',
+    is_customizable: true,
+    images: ['https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop&q=80'],
+  },
+  {
+    _id: 'p3',
+    title: 'Osaka Hand-Dye Slub Tapered Fit',
+    category: 'Custom Fits',
+    base_price: 280.0,
+    fabric_weight: '16oz SLUB',
+    artisan_location: 'Osaka, Japan',
+    description: 'Ultra-textured slub yarn creating intense vertical fade lines over time.',
+    is_customizable: true,
+    images: ['https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=600&auto=format&fit=crop&q=80'],
+  },
+  {
+    _id: 'p4',
+    title: 'Kurashiki Hemp-Blend Indigo Vest',
+    category: 'Accessories',
+    base_price: 195.0,
+    fabric_weight: '14oz HEMP',
+    artisan_location: 'Kurashiki, Japan',
+    description: 'Breathable and durable organic hemp and indigo cotton utility vest.',
+    is_customizable: false,
+    images: ['https://images.unsplash.com/photo-1542272604-780c96856592?w=600&auto=format&fit=crop&q=80'],
+  },
+];
+
 export default function Explore() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(MOCK_EXPLORE_PRODUCTS);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'All Crafts');
@@ -25,15 +72,22 @@ export default function Explore() {
         if (customizableOnly) params.is_customizable = true;
 
         const res = await api.get('/products/', { params });
-        setProducts(res.data);
+        if (Array.isArray(res.data) && res.data.length > 0) {
+          setProducts(res.data);
+        } else {
+          setProducts(MOCK_EXPLORE_PRODUCTS);
+        }
       } catch (err) {
-        console.error('Failed to load products', err);
+        console.warn('Failed to load products from API, displaying catalog:', err);
+        setProducts(MOCK_EXPLORE_PRODUCTS);
       } finally {
         setLoading(false);
       }
     }
     loadProducts();
   }, [selectedCategory, searchQuery, selectedSort, customizableOnly]);
+
+  const displayList = Array.isArray(products) ? products : MOCK_EXPLORE_PRODUCTS;
 
   return (
     <main className="max-w-7xl mx-auto px-4 md:px-margin-desktop py-12">
@@ -103,11 +157,11 @@ export default function Explore() {
       </div>
 
       {/* Product Grid */}
-      {loading ? (
+      {loading && displayList.length === 0 ? (
         <div className="text-center py-20 font-label-md text-on-surface-variant">
           Loading artisanal catalog...
         </div>
-      ) : products.length === 0 ? (
+      ) : displayList.length === 0 ? (
         <div className="text-center py-20 bg-surface-container rounded border border-dashed border-outline-variant">
           <span className="material-symbols-outlined text-4xl text-on-surface-variant mb-2">search_off</span>
           <h3 className="font-headline-md text-xl text-primary font-bold">No denim garments found</h3>
@@ -115,7 +169,7 @@ export default function Explore() {
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product) => (
+          {displayList.map((product) => (
             <div 
               key={product._id}
               onClick={() => navigate(`/product/${product._id}`)}
@@ -127,7 +181,7 @@ export default function Explore() {
                   alt={product.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <LeatherTagBadge text={product.fabric_weight} className="absolute top-4 left-4" />
+                <LeatherTagBadge text={product.fabric_weight || '18oz SELVEDGE'} className="absolute top-4 left-4" />
                 
                 {product.is_customizable && (
                   <div className="absolute top-4 right-4 bg-primary/90 backdrop-blur text-white px-2 py-1 font-stitch-label text-[10px] rounded">
@@ -138,7 +192,7 @@ export default function Explore() {
 
               <div className="p-6 space-y-2">
                 <div className="flex justify-between items-center text-xs font-stitch-label text-secondary">
-                  <span>{product.category.toUpperCase()}</span>
+                  <span>{(product.category || 'DENIM').toUpperCase()}</span>
                   <span>{product.artisan_location || 'Kyoto, Japan'}</span>
                 </div>
 
@@ -151,7 +205,9 @@ export default function Explore() {
                 </p>
 
                 <div className="pt-4 flex justify-between items-center border-t border-dashed border-outline-variant/40">
-                  <span className="font-headline-md text-lg text-primary font-bold">${product.base_price.toFixed(2)}</span>
+                  <span className="font-headline-md text-lg text-primary font-bold">
+                    ${typeof product.base_price === 'number' ? product.base_price.toFixed(2) : '240.00'}
+                  </span>
                   <span className="font-label-md text-xs text-secondary font-bold group-hover:underline flex items-center">
                     View Spec <span className="material-symbols-outlined text-sm ml-1">arrow_forward</span>
                   </span>

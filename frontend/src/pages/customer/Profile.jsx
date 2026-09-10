@@ -13,9 +13,10 @@ export default function Profile() {
     async function loadOrders() {
       try {
         const res = await api.get('/orders/');
-        setOrders(res.data);
+        setOrders(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
-        console.error('Failed to load user orders', err);
+        console.warn('Failed to load user orders, fallback to empty list', err);
+        setOrders([]);
       } finally {
         setLoading(false);
       }

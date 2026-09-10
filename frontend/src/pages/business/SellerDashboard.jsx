@@ -25,10 +25,12 @@ export default function SellerDashboard() {
           api.get('/orders/'),
           api.get('/products/')
         ]);
-        setOrders(ordRes.data);
-        setProducts(prodRes.data);
+        setOrders(Array.isArray(ordRes.data) ? ordRes.data : []);
+        setProducts(Array.isArray(prodRes.data) ? prodRes.data : []);
       } catch (err) {
-        console.error('Failed to load seller dashboard', err);
+        console.warn('Failed to load seller dashboard data, fallback to empty lists', err);
+        setOrders([]);
+        setProducts([]);
       } finally {
         setLoading(false);
       }

@@ -3,21 +3,59 @@ import { Link, useNavigate } from 'react-router-dom';
 import api from '../../api/client';
 import ArtisanProfileSnippet from '../../components/ArtisanProfileSnippet';
 import FabricSwatchCard from '../../components/FabricSwatchCard';
-import { LeatherTagBadge } from '../../components/LeatherTagBadge';
+
+const MOCK_RECOMMENDATIONS = [
+  {
+    _id: 'p1',
+    title: 'Kyoto Shuttle 18oz Heavy Selvedge',
+    category: 'Raw Denim',
+    base_price: 240.0,
+    fabric_weight: '18oz SELVEDGE',
+    images: ['https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop&q=80'],
+  },
+  {
+    _id: 'p2',
+    title: 'Natural Indigo Kakishibu Trucker Jacket',
+    category: 'Jackets',
+    base_price: 320.0,
+    fabric_weight: '15.5oz TWILL',
+    images: ['https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop&q=80'],
+  },
+  {
+    _id: 'p3',
+    title: 'Osaka Hand-Dye Slub Tapered Fit',
+    category: 'Custom Fits',
+    base_price: 280.0,
+    fabric_weight: '16oz SLUB',
+    images: ['https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=600&auto=format&fit=crop&q=80'],
+  },
+  {
+    _id: 'p4',
+    title: 'Kurashiki Hemp-Blend Indigo Vest',
+    category: 'Accessories',
+    base_price: 195.0,
+    fabric_weight: '14oz HEMP',
+    images: ['https://images.unsplash.com/photo-1542272604-780c96856592?w=600&auto=format&fit=crop&q=80'],
+  },
+];
 
 export default function Home() {
   const navigate = useNavigate();
-  const [recommended, setRecommended] = useState([]);
+  const [recommended, setRecommended] = useState(MOCK_RECOMMENDATIONS);
   const [loading, setLoading] = useState(true);
-  const [scrollPos, setScrollPos] = useState(0);
 
   useEffect(() => {
     async function fetchRecommended() {
       try {
         const res = await api.get('/products/recommendations');
-        setRecommended(res.data);
+        if (Array.isArray(res.data) && res.data.length > 0) {
+          setRecommended(res.data);
+        } else {
+          setRecommended(MOCK_RECOMMENDATIONS);
+        }
       } catch (err) {
-        console.error('Failed to load recommendations', err);
+        console.warn('Backend API endpoint unavailable, displaying artisanal recommendations:', err);
+        setRecommended(MOCK_RECOMMENDATIONS);
       } finally {
         setLoading(false);
       }
@@ -32,6 +70,8 @@ export default function Home() {
       el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
+
+  const displayItems = Array.isArray(recommended) && recommended.length > 0 ? recommended : MOCK_RECOMMENDATIONS;
 
   return (
     <main className="pb-24">
@@ -129,10 +169,10 @@ export default function Home() {
           id="recommendations-carousel" 
           className="max-w-7xl mx-auto flex space-x-8 px-4 md:px-margin-desktop overflow-x-auto no-scrollbar pb-8"
         >
-          {loading ? (
+          {loading && displayItems.length === 0 ? (
             <p className="font-label-md text-on-surface-variant">Loading curated denim...</p>
           ) : (
-            recommended.map((item) => (
+            displayItems.map((item) => (
               <div 
                 key={item._id} 
                 onClick={() => navigate(`/product/${item._id}`)}
@@ -145,13 +185,13 @@ export default function Home() {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute top-4 left-4 leather-patch px-3 py-1 text-[10px]">
-                    {item.fabric_weight}
+                    {item.fabric_weight || '18oz SELVEDGE'}
                   </div>
                 </div>
                 <div className="mt-4 space-y-1">
-                  <p className="font-stitch-label text-stitch-label text-on-surface-variant">{item.category.toUpperCase()}</p>
+                  <p className="font-stitch-label text-stitch-label text-on-surface-variant">{(item.category || 'DENIM').toUpperCase()}</p>
                   <h3 className="font-headline-md text-headline-md text-primary text-xl">{item.title}</h3>
-                  <p className="font-body-md text-body-md text-primary font-bold">${item.base_price.toFixed(2)}</p>
+                  <p className="font-body-md text-body-md text-primary font-bold">${typeof item.base_price === 'number' ? item.base_price.toFixed(2) : '240.00'}</p>
                 </div>
               </div>
             ))

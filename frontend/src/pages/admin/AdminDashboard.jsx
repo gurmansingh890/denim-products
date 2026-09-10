@@ -25,12 +25,15 @@ export default function AdminDashboard() {
           api.get('/support/tickets'),
           api.get('/offers/')
         ]);
-        setAnalytics(analyticRes.data);
-        setPendingBiz(bizRes.data);
-        setTickets(tickRes.data);
-        setOffers(offRes.data);
+        setAnalytics(analyticRes.data && typeof analyticRes.data === 'object' ? analyticRes.data : null);
+        setPendingBiz(Array.isArray(bizRes.data) ? bizRes.data : []);
+        setTickets(Array.isArray(tickRes.data) ? tickRes.data : []);
+        setOffers(Array.isArray(offRes.data) ? offRes.data : []);
       } catch (err) {
-        console.error('Admin data load error', err);
+        console.warn('Admin data load error, setting safe fallbacks:', err);
+        setPendingBiz([]);
+        setTickets([]);
+        setOffers([]);
       } finally {
         setLoading(false);
       }

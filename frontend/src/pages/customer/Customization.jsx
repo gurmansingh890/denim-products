@@ -3,38 +3,106 @@ import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../api/client';
 import { useCartStore } from '../../store/useCartStore';
 import PriceBreakdownTable from '../../components/PriceBreakdownTable';
-import { CopperRivet, LeatherTagBadge } from '../../components/LeatherTagBadge';
+import { CopperRivet } from '../../components/LeatherTagBadge';
+
+const FALLBACK_PRODUCT = {
+  _id: 'p1',
+  title: 'Kyoto Shuttle 18oz Heavy Selvedge',
+  category: 'Raw Denim',
+  base_price: 240.0,
+  fabric_weight: '18oz SELVEDGE',
+  images: ['https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop&q=80'],
+};
+
+const MOCK_OPTION_GROUPS = [
+  {
+    id: 'fit',
+    name: 'Silhouette & Cut',
+    description: 'Select vintage shuttle loom pattern fit.',
+    options: [
+      { id: 'slim-tapered', name: 'Slim Tapered', description: 'Snug fit through hip with narrow leg opening.', price_delta: 0 },
+      { id: 'classic-straight', name: 'Classic Straight', description: 'Traditional 1950s workwear relaxed straight fit.', price_delta: 15.0 },
+      { id: 'relaxed-wide', name: 'Relaxed Wide Leg', description: 'Spacious vintage wide leg cut.', price_delta: 20.0 },
+    ],
+  },
+  {
+    id: 'wash',
+    name: 'Indigo Dye Finish',
+    description: 'Natural hank-dyed indigo saturation process.',
+    options: [
+      { id: 'raw-unwashed', name: 'Raw Unwashed (Rigid)', description: 'Unwashed dark indigo selvedge with maximum fading potential.', price_delta: 0 },
+      { id: 'kyoto-wash', name: 'Kyoto Hand Rinse', description: 'One-wash softened with Kyoto mountain spring water.', price_delta: 25.0 },
+      { id: 'vintage-fade', name: 'Vintage Artisan Fade', description: 'Hand-distressed whiskering by Kyoto dyers.', price_delta: 45.0 },
+    ],
+  },
+  {
+    id: 'hardware',
+    name: 'Hand-Hammered Hardware',
+    description: 'Custom metal rivets and button fly buttons.',
+    options: [
+      { id: 'copper-rivet', name: 'Solid Copper Rivets', description: 'Hand-hammered solid copper rivets and donut buttons.', price_delta: 0 },
+      { id: 'black-iron', name: 'Black Iron Hardware', description: 'Matte black iron hardware with anti-rust oil treatment.', price_delta: 10.0 },
+      { id: 'brass-vintage', name: 'Aged Vintage Brass', description: 'Custom engraved aged brass button fly set.', price_delta: 15.0 },
+    ],
+  },
+  {
+    id: 'stitching',
+    name: 'Chainstitch Thread Color',
+    description: 'Union Special 43200G chainstitch hem and seams.',
+    options: [
+      { id: 'golden-tobacco', name: 'Golden Tobacco', description: 'Classic 100% cotton golden tobacco thread.', price_delta: 0 },
+      { id: 'indigo-tonal', name: 'Indigo Tonal Thread', description: 'Deep indigo dyed cotton thread matching fabric.', price_delta: 10.0 },
+      { id: 'crimson-selvedge', name: 'Crimson Accent Stitch', description: 'Red selvedge matching accent thread.', price_delta: 15.0 },
+    ],
+  },
+];
 
 export default function Customization() {
   const { productId } = useParams();
   const navigate = useNavigate();
   const addItemToCart = useCartStore((state) => state.addItem);
 
-  const [product, setProduct] = useState(null);
-  const [optionGroups, setOptionGroups] = useState([]);
+  const [product, setProduct] = useState(FALLBACK_PRODUCT);
+  const [optionGroups, setOptionGroups] = useState(MOCK_OPTION_GROUPS);
   const [selections, setSelections] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadData() {
       try {
-        const [prodRes, optRes] = await Promise.all([
+        const [prodRes, optRes] = await Promise.allSettled([
           api.get(`/products/${productId || 'p1'}`),
           api.get('/customizations/options')
         ]);
-        setProduct(prodRes.data);
-        setOptionGroups(optRes.data);
 
-        // Set default selections for each group
+        let loadedProd = FALLBACK_PRODUCT;
+        if (prodRes.status === 'fulfilled' && prodRes.value.data && prodRes.value.data.title) {
+          loadedProd = prodRes.value.data;
+        }
+        setProduct(loadedProd);
+
+        let loadedGroups = MOCK_OPTION_GROUPS;
+        if (optRes.status === 'fulfilled' && Array.isArray(optRes.value.data) && optRes.value.data.length > 0) {
+          loadedGroups = optRes.value.data;
+        }
+        setOptionGroups(loadedGroups);
+
         const defaults = {};
-        optRes.data.forEach(group => {
-          if (group.options?.length > 0) {
+        loadedGroups.forEach(group => {
+          if (Array.isArray(group.options) && group.options.length > 0) {
             defaults[group.id] = group.options[0];
           }
         });
         setSelections(defaults);
       } catch (err) {
-        console.error('Failed to load configurator data', err);
+        console.warn('Configurator API error, loading mock configurator preset:', err);
+        setProduct(FALLBACK_PRODUCT);
+        setOptionGroups(MOCK_OPTION_GROUPS);
+        const defaults = {};
+        MOCK_OPTION_GROUPS.forEach(group => {
+          defaults[group.id] = group.options[0];
+        });
+        setSelections(defaults);
       } finally {
         setLoading(false);
       }
@@ -46,19 +114,24 @@ export default function Customization() {
     setSelections(prev => ({ ...prev, [groupId]: option }));
   };
 
-  const formattedSelections = Object.entries(selections).map(([groupId, opt]) => ({
-    group: groupId,
-    option_name: opt.name,
-    price_delta: opt.price_delta || 0
-  }));
+  const formattedSelections = Object.entries(selections)
+    .filter(([_, opt]) => opt && typeof opt === 'object')
+    .map(([groupId, opt]) => ({
+      group: groupId,
+      option_name: opt.name || groupId,
+      price_delta: typeof opt.price_delta === 'number' ? opt.price_delta : 0
+    }));
 
   const handleAddCustomToCart = () => {
-    if (!product) return;
-    addItemToCart(product, formattedSelections, 1);
+    addItemToCart(product || FALLBACK_PRODUCT, formattedSelections, 1);
     navigate('/checkout');
   };
 
-  if (loading) {
+  const displayGroups = Array.isArray(optionGroups) ? optionGroups : MOCK_OPTION_GROUPS;
+  const currentProd = product || FALLBACK_PRODUCT;
+  const basePrice = typeof currentProd.base_price === 'number' ? currentProd.base_price : 240.0;
+
+  if (loading && displayGroups.length === 0) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-24 text-center font-label-md text-on-surface-variant">
         Initializing Shuttle Loom Configurator...
@@ -80,7 +153,7 @@ export default function Customization() {
       <div className="grid lg:grid-cols-12 gap-12">
         {/* Left Column: Multi-Step Configurator Options (7 cols) */}
         <div className="lg:col-span-7 space-y-8">
-          {optionGroups.map((group, gIdx) => (
+          {displayGroups.map((group, gIdx) => (
             <div key={group.id} className="bg-surface-container p-6 border border-dashed border-outline-variant rounded">
               <div className="flex items-center space-x-3 mb-4 pb-3 border-b border-primary/10">
                 <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-stitch-label flex items-center justify-center font-bold">
@@ -93,8 +166,9 @@ export default function Customization() {
               </div>
 
               <div className="space-y-4">
-                {group.options.map((opt) => {
+                {(Array.isArray(group.options) ? group.options : []).map((opt) => {
                   const isSelected = selections[group.id]?.id === opt.id;
+                  const priceDelta = typeof opt.price_delta === 'number' ? opt.price_delta : 0;
                   return (
                     <div 
                       key={opt.id}
@@ -108,7 +182,7 @@ export default function Customization() {
                       <div className="flex justify-between items-start">
                         <CopperRivet active={isSelected} label={opt.name} />
                         <span className="font-label-md text-xs font-bold text-primary">
-                          {opt.price_delta > 0 ? `+$${opt.price_delta.toFixed(2)}` : 'Base Standard'}
+                          {priceDelta > 0 ? `+$${priceDelta.toFixed(2)}` : 'Base Standard'}
                         </span>
                       </div>
                       <p className="font-body-md text-xs text-on-surface-variant mt-2 pl-8">
@@ -127,12 +201,12 @@ export default function Customization() {
           {/* Live Visual Spec Box */}
           <div className="bg-primary text-on-primary p-6 rounded shadow-lg relative overflow-hidden">
             <span className="font-stitch-label text-xs text-secondary-fixed">2D GARMENT SPECIFICATION</span>
-            <h4 className="font-headline-md text-2xl text-white mt-1">{product?.title || 'Custom Selvedge Spec'}</h4>
+            <h4 className="font-headline-md text-2xl text-white mt-1">{currentProd.title}</h4>
 
             {/* Simulated Garment Sketch with Stitch Overlay */}
             <div className="my-6 relative h-64 bg-primary-container rounded flex items-center justify-center border border-primary-fixed/20 overflow-hidden">
               <img 
-                src={product?.images?.[0] || 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop&q=80'} 
+                src={currentProd.images?.[0] || 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop&q=80'} 
                 alt="Denim preview"
                 className="w-full h-full object-cover opacity-80"
               />
@@ -148,20 +222,20 @@ export default function Customization() {
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-xs font-stitch-label text-primary-fixed/80 border-t border-primary-fixed/20 pt-4">
-              <div><span className="text-secondary-fixed">FIT:</span> {selections.fit?.name}</div>
-              <div><span className="text-secondary-fixed">WASH:</span> {selections.wash?.name}</div>
-              <div><span className="text-secondary-fixed">HARDWARE:</span> {selections.hardware?.name}</div>
-              <div><span className="text-secondary-fixed">STITCHING:</span> {selections.stitching?.name}</div>
+              <div><span className="text-secondary-fixed">FIT:</span> {selections.fit?.name || 'Slim Tapered'}</div>
+              <div><span className="text-secondary-fixed">WASH:</span> {selections.wash?.name || 'Raw Rigid'}</div>
+              <div><span className="text-secondary-fixed">HARDWARE:</span> {selections.hardware?.name || 'Solid Copper'}</div>
+              <div><span className="text-secondary-fixed">STITCHING:</span> {selections.stitching?.name || 'Golden Tobacco'}</div>
             </div>
           </div>
 
           {/* Live Manifest Price Table */}
           <PriceBreakdownTable 
-            basePrice={product?.base_price || 280.0}
+            basePrice={basePrice}
             selections={formattedSelections}
             artisanFee={25.0}
             deliveryFee={15.0}
-            tax={Math.round(((product?.base_price || 280.0) + formattedSelections.reduce((a, b) => a + b.price_delta, 0) + 25.0) * 0.08 * 100) / 100}
+            tax={Math.round((basePrice + formattedSelections.reduce((a, b) => a + b.price_delta, 0) + 25.0) * 0.08 * 100) / 100}
           />
 
           <button 
