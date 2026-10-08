@@ -1,6 +1,12 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 
 export default function LocationBanner({ city = "Brooklyn, NY", artisanCount = 12, onDetect }) {
+  const location = useLocation();
+  const isAuthPage = ['/login', '/register', '/forgot-password'].includes(location.pathname);
+
+  if (isAuthPage) return null;
+
   return (
     <div className="w-full bg-primary text-on-primary py-2 px-4 md:px-margin-desktop flex justify-between items-center text-xs z-[60]">
       <div className="flex items-center space-x-2 mx-auto md:mx-0">

@@ -8,6 +8,29 @@ export default function Navbar() {
   const cartItems = useCartStore((state) => state.items);
   const cartCount = cartItems.reduce((acc, i) => acc + i.quantity, 0);
   const location = useLocation();
+  const isAuthPage = ['/login', '/register', '/forgot-password'].includes(location.pathname);
+
+  if (isAuthPage) {
+    return (
+      <header className="sticky top-0 left-0 w-full z-50 bg-surface/95 backdrop-blur-md border-b border-primary/10 py-5 shadow-sm">
+        <div className="max-w-7xl mx-auto flex justify-center items-center px-4">
+          <Link to="/" className="flex items-center space-x-3 group">
+            <div className="w-10 h-10 rounded bg-primary flex items-center justify-center text-white shadow-sm group-hover:bg-secondary transition-colors">
+              <span className="material-symbols-outlined text-2xl">texture</span>
+            </div>
+            <div>
+              <h1 className="font-headline-lg text-xl md:text-2xl font-bold text-primary tracking-tight leading-none">
+                Indigo & Stitch
+              </h1>
+              <span className="font-stitch-label text-[10px] text-secondary tracking-widest uppercase">
+                HANDMADE DENIM & BAG STUDIO
+              </span>
+            </div>
+          </Link>
+        </div>
+      </header>
+    );
+  }
 
   const isActive = (path) => location.pathname === path;
 

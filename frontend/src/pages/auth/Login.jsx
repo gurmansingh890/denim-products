@@ -6,8 +6,8 @@ export default function Login() {
   const navigate = useNavigate();
   const login = useAuthStore((state) => state.login);
 
-  const [email, setEmail] = useState('maya@example.com');
-  const [password, setPassword] = useState('password123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -50,6 +50,7 @@ export default function Login() {
             <label className="block font-label-md text-xs text-on-surface-variant mb-1">Email Address</label>
             <input 
               type="email" required
+              placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full p-3 bg-surface border border-outline-variant rounded font-label-md text-sm"
@@ -60,6 +61,7 @@ export default function Login() {
             <label className="block font-label-md text-xs text-on-surface-variant mb-1">Password</label>
             <input 
               type="password" required
+              placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full p-3 bg-surface border border-outline-variant rounded font-label-md text-sm"
@@ -74,14 +76,6 @@ export default function Login() {
             {loading ? 'Authenticating...' : 'Sign In'}
           </button>
         </form>
-
-        {/* Quick Demo Credentials Assistant */}
-        <div className="p-4 bg-surface-container-low border border-outline-variant/60 rounded text-xs space-y-1">
-          <p className="font-stitch-label font-bold text-secondary">DEMO LOGINS FOR TESTING:</p>
-          <p className="text-on-surface-variant">Customer: <code>maya@example.com</code> / <code>password123</code></p>
-          <p className="text-on-surface-variant">Artisan: <code>kenji@matsuidye.jp</code> / <code>artisan123</code></p>
-          <p className="text-on-surface-variant">Admin: <code>admin@indigostitch.com</code> / <code>admin123</code></p>
-        </div>
 
         <div className="text-center pt-2 text-xs font-label-md">
           <p className="text-on-surface-variant">
