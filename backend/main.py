@@ -35,17 +35,13 @@ async def startup_event():
 async def shutdown_event():
     await close_mongo_connection()
 
-# Include API Routers
-app.include_router(auth.router, prefix=settings.API_V1_STR)
-app.include_router(users.router, prefix=settings.API_V1_STR)
-app.include_router(products.router, prefix=settings.API_V1_STR)
-app.include_router(customizations.router, prefix=settings.API_V1_STR)
-app.include_router(location.router, prefix=settings.API_V1_STR)
-app.include_router(orders.router, prefix=settings.API_V1_STR)
-app.include_router(businesses.router, prefix=settings.API_V1_STR)
-app.include_router(offers.router, prefix=settings.API_V1_STR)
-app.include_router(support.router, prefix=settings.API_V1_STR)
-app.include_router(admin.router, prefix=settings.API_V1_STR)
+# Include API Routers (Mount under /api/v1, /api, and root to guarantee 100% route matching)
+routers = [auth.router, users.router, products.router, customizations.router, location.router, orders.router, businesses.router, offers.router, support.router, admin.router]
+
+for r in routers:
+    app.include_router(r, prefix="/api/v1")
+    app.include_router(r, prefix="/api")
+    app.include_router(r)
 
 @app.api_route("/", methods=["GET", "HEAD"])
 async def root():
